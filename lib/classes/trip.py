@@ -1,7 +1,3 @@
-from .visitor import Visitor
-from .national_park import NationalPark
-
-
 class Trip:
     all = []
 
@@ -12,46 +8,57 @@ class Trip:
         self.end_date = end_date
         Trip.all.append(self)
 
-    @property
-    def national_park(self):
-        return self._national_park
-
-    @national_park.setter
-    def national_park(self, national_park):
-        if type(national_park) == NationalPark:
-            self._national_park = national_park
-        else:
-            raise Exception("Not valid park")
+# Trips should be initialized with a visitor, national_park, start_date(str), end_date(str)
 
     @property
     def visitor(self):
         return self._visitor
 
     @visitor.setter
-    def visitor(self, visitor):
-        if type(visitor) == Visitor:
-            self._visitor = visitor
+    def visitor(self, input):
+        from .visitor import Visitor
+        if type(input) == Visitor:
+            self._visitor = input
         else:
-            raise Exception("Not valid visitor")
+            raise Exception('invalid visitor')
+# Trip property Visitor
+# Returns the visitor object for that trip
+# Must be of type Visitor
+
+    @property
+    def national_park(self):
+        return self._national_park
+
+    @national_park.setter
+    def national_park(self, input):
+        from .national_park import NationalPark
+        if type(input) == NationalPark:
+            self._national_park = input
+        else:
+            raise Exception('invalid national park')
+
+# Trip property NationalPark
+# Returns the NationalPark object for that trip
+# Must be of type NationalPark
 
     @property
     def start_date(self):
         return self._start_date
 
     @start_date.setter
-    def start_date(self, start_date):
-        if start_date and type(start_date) == str:
-            self._start_date = start_date
-        # else:
-        #     raise Exception("Not valid start_date")
+    def start_date(self, input):
+        if type(input) == str:
+            self._start_date = input
+        else:
+            raise Exception('invalid start date')
 
     @property
     def end_date(self):
         return self._end_date
 
     @end_date.setter
-    def end_date(self, end_date):
-        if end_date and type(end_date) == str:
-            self._end_date = end_date
-        # else:
-        #     raise Exception("Not valid end_date")
+    def end_date(self, input):
+        if type(input) == str:
+            self._end_date = input
+        else:
+            raise Exception('invalid end date')

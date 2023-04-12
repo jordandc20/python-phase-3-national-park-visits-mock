@@ -1,36 +1,35 @@
-
-
 class Visitor:
 
     def __init__(self, name):
-        if isinstance(name, str) and 1 <= len(name) <= 15:
-            self._name = name
-        # else:
-        #     raise Exception("Not valid name")
+        self.name = name
 
     @property
     def name(self):
         return self._name
 
     @name.setter
-    def name(self, name):
-        if not hasattr(self, "name") and isinstance(name, str) and 1 <= len(name) <= 15:
-            self._name = name
-        # else:
-        #     raise Exception("Not valid name")
+    def name(self, input):
+        if not hasattr(self, 'name'):
+            if type(input) == str and 1 <= len(input) <= 15:
+                self._name = input
+            else:
+                raise Exception('invalid visitor name type')
+        else:
+            raise Exception('cannot change visitor name')
 
     def trips(self):
         from .trip import Trip
-
         return [trip for trip in Trip.all if trip.visitor == self]
+# Returns a list of all trips for that visitor
+# The list of trips must contain type Trip
 
     def nationalparks(self):
         unique_set = set([trip.national_park for trip in self.trips()])
         return list(unique_set)
+# Returns a unique list of all parks who that visitor has visited.
+# The list of national parks must contain type NationalPark
 
-    def create_trip(self, national_park=None, start_date=None, end_date=None):
+    def create_trip(self, national_park, start_date, end_date):
         from .trip import Trip
-        if national_park and start_date and end_date:
-            Trip(self, national_park, start_date, end_date)
-        else:
-            raise Exception("Not enough inputs")
+        Trip(self, national_park, start_date, end_date)
+# given a national park object, a start_date and end_date (as a string), creates a new Trip and associates it with that visitor and national park.
