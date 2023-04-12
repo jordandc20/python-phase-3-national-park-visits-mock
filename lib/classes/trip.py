@@ -17,7 +17,7 @@ class Trip:
     @visitor.setter
     def visitor(self, input):
         from .visitor import Visitor
-        if type(input) == Visitor:
+        if isinstance(input, Visitor):
             self._visitor = input
         else:
             raise Exception('invalid visitor')
@@ -62,3 +62,7 @@ class Trip:
             self._end_date = input
         else:
             raise Exception('invalid end date')
+
+    @classmethod
+    def get_all(cls):
+        return cls.all

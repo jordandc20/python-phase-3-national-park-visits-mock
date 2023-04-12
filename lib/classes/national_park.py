@@ -21,7 +21,8 @@ class NationalPark:
             raise Exception('cannot change visitor name')
 
     def trips(self):
-        return [trip for trip in Trip.all if trip.national_park == self]
+        all_trips = Trip.get_all()
+        return [trip for trip in all_trips if trip.national_park == self]
 # Returns a list of all trips planned for this national park
 # The list of trips must contain type trip
 
